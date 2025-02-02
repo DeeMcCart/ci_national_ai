@@ -4,6 +4,7 @@
     --primary-green: #21aa45;
     --secondary-green: #8fd123;
     --primary-purple: #afb7e3;
+    --slide-color: #1181AE;
 }
 
 * {
@@ -13,7 +14,7 @@
 
 .container-fluid {
     max-width: none;
-    width: 100vw;
+    width: 100%;
     padding: 0;
 }
 
@@ -22,8 +23,15 @@
 }
 
 .title-page {
-	height: 100vh; /* Full viewport height */
+	height: 600px; /* Full viewport height */
 	background: url('/clientui/static/images/hero_image.png') no-repeat center center/cover;
+    background-color: var(--slide-color);
+}
+
+.title-page .title-text {
+    max-width: 350px;
+    margin-left: 150px;
+    color: black;
 }
 
 .disclaimer-image {
@@ -41,6 +49,9 @@
     border-radius: 0.375rem;
     padding: 10px;
     background-color: #f8f9fa;
+    height: calc(80vh - 120px);
+    max-height: calc(80vh - 120px);
+    overflow-y: scroll;
 }
 .chat-message {
     margin-bottom: 10px;
@@ -61,10 +72,39 @@
 .chat-bubble.bot {
     background-color: #e9ecef;
     color: #212529;
+    white-space: pre-wrap;
 }
 .chat-bubble.user {
     background-color: #007bff;
     color: white;
+}
+
+#map-button:hover {
+    background-color: #f8f9fa; /* Darker green on hover */
+}
+
+#map {
+    height: 62vh;
+    
+}
+
+#location {
+    display: none;
+}
+
+#map-button {
+    float: right;
+    font-size: 20px;
+    /* Adjust the size of the < symbol */
+    background-color: #afb7e3;
+    /* Green background */
+    border: none;
+    /* Remove border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+
 }
 
 /* Typing Indicator Animation */
@@ -102,7 +142,7 @@
 
 /* Contact section */
 .profile-photo {
-    width: 25%;
+    width: 35%;
     height: auto;
     border-radius: 50%; /* Makes the photo circular */
     object-fit: cover;
@@ -116,7 +156,7 @@
 }
 .profile-card .role {
     font-style: italic;
-    color: gray;
+    color: white;
 }
 .profile-card p {
     font-size: 0.9rem;
@@ -132,3 +172,54 @@
     color: var(--primary-blue);
 }
 
+.user_info {
+    max-height: 0;
+    display: none;
+}
+
+.is_visible {
+    display: block;
+}
+
+.user_info.is_visible {
+    max-height: 500px;
+    transition: max-height 0.25s ease-in;
+}
+
+.modal-container {
+    background-color: rgba(208,208,208,0.7);
+}
+
+.home-section {
+    margin: 70px auto;
+}
+
+#faq {
+    background-color: var(--primary-purple);
+}
+
+#faq_accordion {
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 30px 0 50px 0;
+}
+
+.accordion-button:not(.collapsed) {
+    color: black;
+    background-color: white;
+    font-weight: bold;
+}
+
+#team {
+    color: white;
+    background-color: var(--bs-dark);
+}
+
+.linkedin-link {
+    margin-left: 5px;
+}
+
+#footer {
+    height: 50px;
+    background-color: var(--primary-purple);
+}

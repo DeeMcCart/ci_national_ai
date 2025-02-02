@@ -1,6 +1,11 @@
 
 # My Flask App
 
+## Live Site
+
+https://code-institute-433215.uc.r.appspot.com/
+
+
 This is a simple Flask application with static files and API views.
 
 ## Prerequisites
@@ -40,16 +45,21 @@ The application will be available at http://127.0.0.1:5000.
 
 ## Deploying to Google App Engine
 
+Note: Instructions on installing gcloud are here: https://cloud.google.com/sdk/docs/install-sdk
+
 1. Ensure you are in the project root directory:
 
    cd ci_national_ai
 
-2. Deploy the application to Google App Engine:
+2. Add Env Vars to env_variables.yaml file.
+   Alter values as appropriate for PROJECT_ID, LOCATION, ENDPOINT_ID, MAPBOX_TOKEN
+
+3. Deploy the application to Google App Engine:
 
    cd src/
    gcloud app deploy
 
-3. Access the deployed application at https://<your-project-id>.appspot.com.
+4. Access the deployed application at https://<your-project-id>.appspot.com.
 
 ### Google App Engine Configuration
 

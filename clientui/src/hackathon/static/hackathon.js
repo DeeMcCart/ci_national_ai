@@ -25,11 +25,26 @@ var alerts = new Alerts();
 class HackathonUI {
     constructor() {
         this.tab = 'info';
+        this.visibility = {
+            user_info: false,
+            instructions: false,
+            disclaimer: false,
+        };
+        this.user_info = {
+            location: null,
+            income: null,
+            savings: null,
+            tax_2023: null,
+            tax_2022: null,
+            tax_2021: null,
+            tax_2020: null,
+        };
         this.history = [{
             from: "bot",
             text: "Hallo! Can I help you with your inquiry?"
         }];
-        this.current_prompt = null;
+        this.valid_prompt = false;
+        this.current_prompt = '';
         this.loading = false;
     }
 
@@ -38,8 +53,27 @@ class HackathonUI {
         turtlegui.reload();
     }
 
+    check_valid_prompt() {
+        if(!this.has_prompt() || this.loading) {
+            this.valid_prompt = false;
+        } else {
+            this.valid_prompt = true;
+        }
+        turtlegui.reload(document.getElementById('send_chat'));
+        return this.valid_prompt;
+    }
+
     has_prompt() {
         return this.current_prompt != null && !this.loading;
+    }
+
+    check_input(event){
+        if(event.key.length == 1) {
+            this.current_prompt += event.key;
+            this.check_valid_prompt();
+        } else if(event.key == 'Enter') {
+            this.process_prompt();
+        }
     }
 
     async process_prompt() {
@@ -48,6 +82,7 @@ class HackathonUI {
             text: this.current_prompt
         });
         this.loading = true;
+        this.valid_prompt = false;
         turtlegui.reload();
 
         var response = await this.send_prompt();
@@ -57,7 +92,8 @@ class HackathonUI {
             text: response['reply']
         });
         this.loading = false;
-        this.current_prompt = null;
+        this.current_prompt = '';
+        this.valid_prompt = false;
         turtlegui.reload();
     }
 
@@ -70,7 +106,9 @@ class HackathonUI {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "prompt": this.current_prompt
+                    "prompt": this.current_prompt,
+                    "history": this.history,
+                    "user_info": this.user_info,
                 })
             });
             var data = await response.json();
@@ -83,6 +121,17 @@ class HackathonUI {
             this.loading = false;
             turtlegui.reload();
         }
+    }
+
+    toggle_visible(section){
+        this.visibility[section] = !this.visibility[section];
+        turtlegui.reload();
+    }
+
+    start_chat() {
+        this.chat_active = true;
+        this.current_prompt = null;
+        turtlegui.reload();
     }
 }
 

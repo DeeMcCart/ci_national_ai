@@ -1,0 +1,36 @@
+@media only screen and (max-width: 600px) {
+    .title-page {
+        height: 600px; /* Full viewport height */
+        background: url('/clientui/static/images/hero_image_square.png') no-repeat center center/cover;
+        background-color: var(--primary-purple);
+        padding: 0;
+    }
+
+    .title-page .title-text {
+        text-align: center;
+        width: 100%;
+        margin-left: 0 !important;
+        color: white;
+        text-shadow: 1px 1px #000000;
+
+    }
+
+    section#about, section#faq, section#disclaimer, section#data-protection {
+        padding: 0 30px;
+    }
+
+    #faq_accordion {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    #faq .row .col h2 {
+        text-align:left !important;
+    }
+
+    .home-section {
+        margin: 30px auto;
+    }
+
+
+}

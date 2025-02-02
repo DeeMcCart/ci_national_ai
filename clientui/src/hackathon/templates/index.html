@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomeIE</title>
+    <link rel="icon" type="image/x-icon" href="/clientui/static/images/home_ie_icon_sm.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="/clientui/static/hackathon.css" rel="stylesheet">
+    <link href="/clientui/static/responsive.css" rel="stylesheet">
+    <!-- Mapbox css -->
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css"
+        type="text/css">
+    <!-- Mapbox GL JS CDN -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet' />
+
 </head>
+
 <body>
 
     <!-- Alert -->
-    <div class="container-fluid my-3 fixed-top z-3" gui-show="alerts.has_message()" gui-list="alerts.messages" gui-item="message">
+    <div class="container-fluid my-3 fixed-top z-3" gui-show="alerts.has_message()" gui-list="alerts.messages"
+        gui-item="message">
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>Error:</strong> <span gui-text="message"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -20,86 +34,158 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top z-2">
-        <a class="navbar-brand" role="button" gui-click="hackathon.set_tab('info')"><img src="/clientui/static/images/home_ie_icon_sm.png" alt="HomeIE logo" />HomeIE</a>
-        <button class="navbar-toggler mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" role="button" gui-click="hackathon.set_tab('info')"><img
+                src="/clientui/static/images/home_ie_icon_sm.png" alt="HomeIE logo" />HomeIE</a>
+        <button class="navbar-toggler mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item px-3" gui-click="hackathon.set_tab('info')">
-                    <a class="nav-link" gui-class="hackathon.tab=='info'&&'active'" href="#info">Info</a>
+                    <a class="nav-link" gui-class="hackathon.tab=='info'&&'active'" href="#info">Home</a>
+                </li>
+                <li class="nav-item px-3" gui-click="scroll_to('team')">
+                    <a class="nav-link" gui-class="hackathon.tab=='team'&&'active'" href="#team">Team</a>
+                </li>
+                <li class="nav-item px-3" gui-click="scroll_to('contact')">
+                    <a class="nav-link" gui-class="hackathon.tab=='contact'&&'active'" href="#contact">Contact</a>
                 </li>
                 <li class="nav-item px-3" gui-click="hackathon.set_tab('chat')">
-                    <a class="nav-link" gui-class="hackathon.tab=='chat'&&'active'" href="#chatbotend">Chatbot</a>
-                </li>
-                <li class="nav-item px-3" gui-click="hackathon.set_tab('contact')">
-                    <a class="nav-link" gui-class="hackathon.tab=='contact'&&'active'" href="#contact">Contact</a>
+                    <a role="button" class="btn btn-primary" href="#chatbotend">Try Homie Now!</a>
                 </li>
             </ul>
         </div>
     </nav>
 
     <!-- General Info Screen -->
-    <div class="container-fluid my-5" gui-show="hackathon.tab=='info'">
-        <section id="info" class="row">
+
+    <div class="container-fluid home-section" gui-show="hackathon.tab=='info'">
+        <section id="info" class="row p-0 m-0">
 
             <!-- Title Page -->
-            <section class="title-page d-flex align-items-center justify-content-center text-center text-white">
-                <div class="overlay w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+            <section class="title-page d-flex align-items-center justify-content-left text-white">
+                <div class="overlay text-left title-text">
                     <h1 class="display-4 fw-bold">HomeIE</h1>
                     <p class="lead mb-4">Tired of insecure renting?</p>
-                    <p class="lead mb-4">HomeIE AI powered tool helps you work towards a dream of long-term, secure housing</p>
-                    <a class="btn btn-primary btn-lg" gui-click="hackathon.set_tab('chat')" href="#chatbotend">Try HomeIE now</a>
+                    <p class="lead mb-4">HomeIE AI powered tool helps you work towards a dream of long-term, secure
+                        housing</p>
+                    <a class="btn btn-primary btn-lg" gui-click="hackathon.set_tab('chat')" href="#chatbotend">Try
+                        HomeIE now</a>
                 </div>
             </section>
         </section>
     </div>
-    
-    <section id="about" class="container my-5"  gui-show="hackathon.tab=='info'">
+
+    <section id="about" class="container home-section p-3" gui-show="hackathon.tab=='info'">
         <div class="row">
             <div class="col">
                 <h2 class="mb-3">About HomeIE</h2>
             </div>
         </div>
-        
+
         <div class="row gx-5">
             <div class="col-sm-12 col-md-6">
-                <p>HomeIE seeks to help people in Ireland transition from the insecurity of the private rental market into secure long-term housing. Given your personal circumstances, it helps you to understand some options, to progress to a longer-term housing solution, and spells out some steps you may need to take to do so.</p>
+                <p>HomeIE seeks to help people in Ireland transition from the insecurity of the private rental market
+                    into secure long-term housing. Given your personal circumstances, it helps you to understand some
+                    options, to progress to a longer-term housing solution, and spells out some steps you may need to
+                    take to do so.</p>
             </div>
             <div class="col-sm-12 col-md-6">
                 <p>HomeIE recognises that secure housing could be:
-                    <ul>
-                        <li>Purpose-built or publicly owned social housing, under a local authority rental scheme (i.e. not a private landlord)</li>
-                        <li>A property purchased by you (could be part funded through grant schemes, or co-owned via a Shared Ownership scheme)
-                    </ul>
+                <ul>
+                    <li>Purpose-built or publicly owned social housing, under a local authority rental scheme (i.e. not
+                        a private landlord)</li>
+                    <li>A property purchased by you (could be part funded through grant schemes, or co-owned via a
+                        Shared Ownership scheme)
+                </ul>
                 </p>
             </div>
-       </div>
+        </div>
 
     </section>
 
-    <section id="faq" class="container my-5" gui-show="hackathon.tab=='info'">
+    <section id="faq" class="container-fluid home-section p-3" gui-show="hackathon.tab=='info'">
         <div class="row">
             <div class="col">
-                <h2>FAQ</h2>
+                <h2 class="text-center">FAQ</h2>
             </div>
         </div>
 
-        <div> 
-            <p>Question 1: An answer both entertaining and illuminating</p>
-            <p>Question 2: An answer both entertaining and illuminating</p>
-        </div>
-     </section>
 
-     <section id="disclaimer" class="container my-5" gui-show="hackathon.tab=='info'">
+        <div class="accordion" id="faq_accordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Why choose HomeIE?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#faq_accordion">
+                    <div class="accordion-body">
+                        Imagine trying to buy a house. You’re bombarded with information—mortgage rates, property
+                        prices, legal jargon—all spread across different platforms. It’s not just confusing; it’s
+                        downright frustrating. Many are left feeling powerless, uncertain, and overwhelmed.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        What exactly is HomeIE's "Homie"?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#faq_accordion">
+                    <div class="accordion-body">
+                        Enter Homie, our smart AI assistant. Homie isn’t just another chatbot; it’s a comprehensive,
+                        intuitive platform that consolidates all the crucial information you need to secure a home.
+                        Whether it’s finding the right mortgage, understanding the fine print, or discovering financial
+                        assistance programs, Homie’s got your back. Powered by the latest AI technologies like ChatGPT-4
+                        and Gemini, Homie provides personalized advice, tailored to your financial situation,
+                        preferences, and needs.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        What sort data does "Homie" use and is my own data secure?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#faq_accordion">
+                    <div class="accordion-body">
+                        Our datasets are carefully curated, pulling from reliable sources to ensure Homie’s advice is
+                        accurate and trustworthy. We’ve considered everything, from current market trends to localized
+                        housing data.
+                        <br>
+                        In line with the theme “AI Here for Good,” we’ve embedded ethical considerations into every
+                        layer of HomeIE. Our AI doesn’t just analyze data; it respects your privacy, ensuring that no
+                        personal information is retained. We’ve implemented fairness checks to prevent bias, making sure
+                        that Homie serves everyone equally, offering advice that’s as diverse as our user base.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="disclaimer" class="container home-section p-2" gui-show="hackathon.tab=='info'">
         <div class="row my-5">
             <div class="col-sm-12 col-md-6">
                 <h2>Disclaimer</h2>
                 <p>
-                    HomeIE aims to assist you by using AI to automatically gather information which appears to be relevant to your circumstances. Given that AI is an emerging technology, any information shown cannot be guaranteed to be correct, and the responsibility remains with you, the user, to verify that information with the source provider.
+                    HomeIE aims to assist you by using AI to automatically gather information which appears to be
+                    relevant to your circumstances. Given that AI is an emerging technology, any information shown
+                    cannot be guaranteed to be correct, and the responsibility remains with you, the user, to verify
+                    that information with the source provider.
                 </p>
                 <p>
-                    Having said that, this is a learning model so if you spor an error please let us know on (contact-us details) and we will make every effort to correct it!
+                    Having said that, this is a learning model so if you spor an error please let us know on (contact-us
+                    details) and we will make every effort to correct it!
                 </p>
             </div>
 
@@ -117,135 +203,372 @@
             <div class="col-sm-12 col-md-6">
                 <h2>Data Protection</h2>
                 <p>
-                    Any data you enter (income, outgoings, work situation, etc) is retained by HomeIE for the duration of the session only. However, this data is submitted to a commercial LLM platform and we actually haven't a clue whether they are going to grab your data and punish you with it forever. Sorry about that.
+                    Any data you enter (income, outgoings, work situation, etc) is retained by HomeIE for the duration
+                    of the session only. However, this data is submitted to a commercial LLM platform and we actually
+                    haven't a clue whether they are going to grab your data and punish you with it forever. Sorry about
+                    that.
                 </p>
             </div>
         </div>
 
     </section>
     <!-- Chatbot UI Screen -->
-    
-    <div id="chatbot" class="container my-5" gui-show="hackathon.tab=='chat'">
-        <h2>Chatbot</h2>
-        <div class="card">
-            <div class="card-body">
-                <div class="chat-window mb-3">
-                    <div gui-list="hackathon.history" gui-item="history">
-                        <div class="chat-message" gui-class="history.from">
-                            <div class="chat-bubble" gui-class="history.from" gui-text="history.text"></div>
-                        </div>
-                    </div>
-
-                    <!-- Typing Indicator -->
-                    <div class="chat-message bot" id="typingIndicator" gui-show="hackathon.loading">
-                        <div class="typing-indicator">
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                        </div>
-                    </div>
+    <div class="modal bd-example-modal-lg modal-container" tabindex="-1" role="dialog"
+        gui-show="hackathon.tab=='chat'&&(!hackathon.chat_active)">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Before we start...</h4>
                 </div>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Type your message here" aria-label="Chat input" gui-val="hackathon.current_prompt"></input>
-                    <button class="btn btn-primary" type="button" gui-click="hackathon.process_prompt()">Send</button>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col">
+
+                                <label for="location">Location</label>
+                                <div id="geocoder"></div>
+                                <input type="text" id="location" class="form-control" placeholder="e.g. Dublin"
+                                    gui-val="hackathon.user_info.location">
+                            </div>
+
+                            <div class="col">
+                                <label for="income">Income &euro; (p/a)</label>
+                                <input type="number" id="income" class="form-control" placeholder="21000"
+                                    gui-val="hackathon.user_info.income">
+                            </div>
+                            <div class="col">
+                                <label for="name">Savings &euro; (total)</label>
+                                <input type="text" id="name" class="form-control" placeholder="2100"
+                                    gui-val="hackathon.user_info.savings">
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col">Tax paid in previous years (&euro;):</div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" id="tax-2023" class="form-control"
+                                    gui-val="hackathon.user_info.tax_2023" placeholder="2023">
+                            </div>
+
+                            <div class="col">
+                                <input type="text" id="tax-2022" class="form-control"
+                                    gui-val="hackathon.user_info.tax_2022" placeholder="2022">
+                            </div>
+
+                            <div class="col">
+                                <input type="number" id="tax-2021" class="form-control"
+                                    gui-val="hackathon.user_info.tax_2021" placeholder="2021">
+                            </div>
+
+                            <div class="col">
+                                <input type="number" id="tax-2020" class="form-control"
+                                    gui-val="hackathon.user_info.tax_2020" placeholder="2020">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" gui-click="hackathon.start_chat()">Start Chat</button>
                 </div>
             </div>
         </div>
-        <span id="chatbotend"></span>
+    </div>
+
+    <div id="chatbot" class="container" gui-show="hackathon.tab=='chat'">
+        <div class="row">
+            <div class="col">
+                <h2>Homie</h2>
+            </div>
+            <div class="col">
+                <button id="map-button" onclick="toggleDiv('map-toggle')">&lt;</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+
+            <div class="col-md-6" id="chat-toggle">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chat-window mb-3">
+                            <div gui-list="hackathon.history" gui-item="history">
+                                <div class="chat-message" gui-class="history.from">
+                                    <div class="chat-bubble" gui-class="history.from" gui-html="history.text"></div>
+                                </div>
+                            </div>
+
+                            <!-- Typing Indicator -->
+                            <div class="chat-message bot" id="typingIndicator" gui-show="hackathon.loading">
+                                <div class="typing-indicator">
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Type your message here"
+                                aria-label="Chat input" gui-val="hackathon.current_prompt"
+                                gui-keyup="hackathon.check_input(event)"></input>
+                            <button class="btn btn-primary" type="button" gui-click="hackathon.process_prompt()"
+                                gui-class="!hackathon.valid_prompt&&'disabled'" id="send_chat">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="map-toggle">
+                <div id="map">
+                    <div id="menu">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-sm-12 col-md-3">
+                <button class="btn btn-secondary btn-sm d-inline"
+                    gui-click="hackathon.toggle_visible('instructions')">Instructions</button>
+                <button class="btn btn-warning btn-sm d-inline"
+                    gui-click="hackathon.toggle_visible('disclaimer')">Disclaimer</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal bd-example-modal-lg modal-container" tabindex="-1" role="dialog" aria-hidden="true"
+        gui-class="hackathon.visibility.instructions&&'is_visible'">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Instructions</h5>
+                    <button type="button" class="btn btn-light" data-dismiss="modal" aria-label="Close"
+                        gui-click="hackathon.toggle_visible('instructions')">
+                        <i class="bi bi-x" style="font-size: 1.2rem;"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>The approach taken by HomeIE is to focus attention on certain items of information to give you a
+                        joined-up view of what your options might be:</p>
+
+                    <ul>
+                        <li>HomeIE is represented by a chatbot</li>
+                        <li>The chatbot is built on Google's Gemini platform, and is trained in certain knowledge areas
+                        </li>
+                    </ul>
+
+                    <p>We have trained the chatbot on certain questions which may be helpful to you</p>
+                    <ul>
+                        <li>Might you qualify, based on income, for any of the local authority housing list options?
+                        </li>
+                        <li>If so, what social housing schemes exist or are planned for your locality?</li>
+                    </ul>
+
+                    <p>Example Questions:</p>
+                    <ul>
+                        <li>What affordable housing options are available in my locality?</li>
+                        <li>What new housing developments are scheduled in my locality?</li>
+                        <li>What new housing developments are scheduled in my locality?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal bd-example-modal-lg modal-container" tabindex="-1" role="dialog" aria-hidden="true"
+        gui-class="hackathon.visibility.disclaimer&&'is_visible'">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Disclaimer</h4>
+                        <button type="button" class="btn btn-light" data-dismiss="modal" aria-label="Close"
+                            gui-click="hackathon.toggle_visible('disclaimer')">
+                            <i class="bi bi-x" style="font-size: 1.2rem;"></i>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <p>HomeIE aims to assist you by using AI to automatically gather information which appears to be
+                        relevant to your circumstances.
+                        Given that AI is an emerging technology, any information shown cannot be guaranteed to be
+                        correct, and the responsibility remains with you, the user, to verify that information with the
+                        source provider.
+                        Having said that, this is a learning model so if you spot an error please let us know on
+                        (contact-us details) and we will make every effort to correct it!</p>
+
+                    <p>HomeIE does not provide professional, financial, legal or theraputic advice. This site is
+                        intended as a lifestyle guide and is developed for entertainment purposes only.</p>
+
+                    <h6>Data Protection</h6>
+                    <p>
+                        Any data you enter (income, outgoings, work situation etc) is retained by HomeIE for the
+                        duration of the session only.
+                        However, this data is submitted to a commercial LLM platform and we actually haven't a clue
+                        whether they are going to grab your data and punish you with it forever.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Team Info Screen -->
+    <div id="team" class="container-fluid p-5" gui-show="hackathon.tab=='info'">
+        <div class="row mb-4">
+            <div class="col">
+                <h2 class="text-center"><a name="team">Meet The Team</a></h2>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                <div class="profile-card">
+                    <img src="https://ca.slack-edge.com/T0L30B202-U02JSK36HGU-2955f9d48336-512" alt="Profile Photo 1"
+                        class="profile-photo">
+                    <h5 class="m-0">Sean Meade<a href="https://www.linkedin.com/in/seanmeadetech/" class="linkedin-link"
+                            target="_blank"><i class="bi bi-linkedin"></i></a></h5>
+                    <div class="role">Team Lead</div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                <div class="profile-card">
+                    <img src="https://ca.slack-edge.com/T0L30B202-U04KZ41SHAR-40dd6d74cdc8-512" alt="Profile Photo 1"
+                        class="profile-photo">
+                    <h5 class="m-0">Dierdre McCarthy<a href="https://www.linkedin.com/in/deirdre-mc-carthy/"
+                            class="linkedin-link" target="_blank"><i class="bi bi-linkedin"></i></a></h5>
+                    <div class="role">Scrum Master/Product Manager</div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                <div class="profile-card">
+                    <img src="https://ca.slack-edge.com/T0L30B202-U03L9UE1WBF-6970b8e56a3a-512" alt="Profile Photo 1"
+                        class="profile-photo">
+                    <h5 class="m-0">Valerie N&#205; Loinsigh<a
+                            href="https://www.linkedin.com/in/valerie-n%C3%AD-loinsigh-aca-91388b3a/"
+                            class="linkedin-link" target="_blank"><i class="bi bi-linkedin"></i></a></h5>
+                    <div class="role">Research &amp; Dataset Identification</div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                <div class="profile-card">
+                    <img src="https://ca.slack-edge.com/T0L30B202-U01BLE69FGX-ea6bbe8f82a6-512" alt="Profile Photo 1" class="profile-photo">
+                    <h5 class="m-0">Vinnie Ordobas<a href="https://www.linkedin.com/in/vinnie-ordobas/" class="linkedin-link" target="_blank"><i class="bi bi-linkedin"></i></a></h5>
+                    <img src="https://ca.slack-edge.com/T0L30B202-U01BLE69FGX-ea6bbe8f82a6-512" alt="Profile Photo 1"
+                        class="profile-photo">
+                    <h5 class="m-0">Vinnie Ordobasi<a href="https://www.linkedin.com/in/vinnie-ordobas/"
+                            class="linkedin-link" target="_blank"><i class="bi bi-linkedin"></i></a></h5>
+                    <div class="role">AI Learning Lead</div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                <div class="profile-card">
+                    <img src="https://ca.slack-edge.com/T0L30B202-UQXQCG2TT-a3b077414ed4-512" alt="Profile Photo 1"
+                        class="profile-photo">
+                    <h5 class="m-0">Stefan Dworschak<a href="https://www.linkedin.com/in/stefan-dworschak/"
+                            class="linkedin-link" target="_blank"><i class="bi bi-linkedin"></i></a></h5>
+                    <div class="role">Frontend &amp; Design</div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                <div class="profile-card">
+                    <img src="https://ca.slack-edge.com/T0L30B202-U014FBGKZLN-a5485a1f9862-512" alt="Profile Photo 1"
+                        class="profile-photo">
+                    <h5 class="m-0">Ray Gallagheri<a href="https://www.linkedin.com/in/gomyar/" class="linkedin-link"
+                            target="_blank"><i class="bi bi-linkedin"></i></a></h5>
+                    <div class="role">Practical AI Integration</div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                <div class="profile-card">
+                    <img src="https://ca.slack-edge.com/T0L30B202-U0443TJJAJW-795ce6c4a299-512" alt="Profile Photo 1"
+                        class="profile-photo">
+                    <h5 class="m-0">Berat Zorlu <a href="https://www.linkedin.com/in/berat-zorlu/" class="linkedin-link"
+                            target="_blank"><i class="bi bi-linkedin"></i></a> </h5>
+                    <div class="role">Consultant</div>
+                </div>
+            </div>
+
+
+
+        </div>
     </div>
 
     <!-- Contact Info Screen -->
-    <div id="contact" class="container my-5" gui-show="hackathon.tab=='contact'">
-        <h2>Contact Us</h2>
-        <p>We are really interested in your feedback! HomeIE has been developed under hackathon time pressure and we feel this is only the beginning... please tell us what's not working, what would be of value to offer, what have we not yet ocnsidered?</p>
-        <p>We need your help to improve Housing security for people in Ireland. Together we can lobby for change, can share information, can use our personal and social resources to best advantage...</p>
-        <ul class="list-group">
-            <li class="list-group-item">Email: contact@example.com</li>
-            <li class="list-group-item">Phone: +123 456 7890</li>
-        </ul>
-
-        <h4 class="mt-4 mb-2">Who we are</h4>
+    <div id="contact" class="container p-3 my-5 text-center" gui-show="hackathon.tab=='info'">
         <div class="row">
-
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="profile-card">
-                    <img src="https://ca.slack-edge.com/T0L30B202-U0443TJJAJW-795ce6c4a299-48" alt="Profile Photo 1" class="profile-photo">
-                    <h5>Berat Zorlu</h5>
-                    <div class="role">Chief Recombobulator</div>
-                    <a href="https://www.linkedin.com/in/janedoe" class="linkedin-link" target="_blank">LinkedIn Profile</a>
-                    <p>Almost certainly not a bot.</p>
-                </div>
+            <div class="col">
+                <h2><a name="contact">Contact Us</a></h2>
+                <p>We are really interested in your feedback! HomeIE has been developed under hackathon time pressure
+                    and we feel this is only the beginning... please tell us what's not working, what would be of value
+                    to offer, what have we not yet ocnsidered?</p>
+                <p>We need your help to improve Housing security for people in Ireland. Together we can lobby for
+                    change, can share information, can use our personal and social resources to best advantage...</p>
             </div>
+        </div>
+        <div class="row w-50 mx-auto mt-3">
+            <div class="col">
+                <form>
+                    <div class="form-group mb-3">
+                        <label for="contact_name">Name</label>
+                        <input type="text" name="contact_name" id="contact_name" class="form-control" />
+                    </div>
 
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="profile-card">
-                    <img src="https://ca.slack-edge.com/T0L30B202-U04KZ41SHAR-40dd6d74cdc8-48" alt="Profile Photo 1" class="profile-photo">
-                    <h5>Dierdre McCarthy</h5>
-                    <div class="role">Chief Recombobulator</div>
-                    <a href="https://www.linkedin.com/in/janedoe" class="linkedin-link" target="_blank">LinkedIn Profile</a>
-                    <p>Almost certainly not a bot.</p>
-                </div>
+                    <div class="form-group mb-3">
+                        <label for="contact_email">Email</label>
+                        <input type="text" name="contact_email" id="contact_email" class="form-control" />
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="contact_message">Message</label>
+                        <textarea name="contact_message" id="contact_message" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <button class="btn btn-primary">Send</button>
+                    </div>
+
+                </form>
             </div>
-
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="profile-card">
-                    <img src="https://ca.slack-edge.com/T0L30B202-U02JSK36HGU-2955f9d48336-48" alt="Profile Photo 1" class="profile-photo">
-                    <h5>Sean Meade</h5>
-                    <div class="role">Chief Recombobulator</div>
-                    <a href="https://www.linkedin.com/in/janedoe" class="linkedin-link" target="_blank">LinkedIn Profile</a>
-                    <p>Almost certainly not a bot.</p>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="profile-card">
-                    <img src="https://ca.slack-edge.com/T0L30B202-UQXQCG2TT-a3b077414ed4-48" alt="Profile Photo 1" class="profile-photo">
-                    <h5>Stefan Dworschak</h5>
-                    <div class="role">Chief Recombobulator</div>
-                    <a href="https://www.linkedin.com/in/janedoe" class="linkedin-link" target="_blank">LinkedIn Profile</a>
-                    <p>Almost certainly not a bot.</p>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="profile-card">
-                    <img src="https://ca.slack-edge.com/T0L30B202-U03L9UE1WBF-6970b8e56a3a-48" alt="Profile Photo 1" class="profile-photo">
-                    <h5>Valerie No Loinsigh</h5>
-                    <div class="role">Chief Recombobulator</div>
-                    <a href="https://www.linkedin.com/in/janedoe" class="linkedin-link" target="_blank">LinkedIn Profile</a>
-                    <p>Almost certainly not a bot.</p>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="profile-card">
-                    <img src="https://ca.slack-edge.com/T0L30B202-U01BLE69FGX-ea6bbe8f82a6-48" alt="Profile Photo 1" class="profile-photo">
-                    <h5>Vinnie Ordobas</h5>
-                    <div class="role">Chief Recombobulator</div>
-                    <a href="https://www.linkedin.com/in/janedoe" class="linkedin-link" target="_blank">LinkedIn Profile</a>
-                    <p>Almost certainly not a bot.</p>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="profile-card">
-                    <img src="https://ca.slack-edge.com/T0L30B202-U014FBGKZLN-a5485a1f9862-48" alt="Profile Photo 1" class="profile-photo">
-                    <h5>Ray Gallagher</h5>
-                    <div class="role">Chief Recombobulator</div>
-                    <a href="https://www.linkedin.com/in/janedoe" class="linkedin-link" target="_blank">LinkedIn Profile</a>
-                    <p>Almost certainly not a bot.</p>
-                </div>
-            </div>
-
-
         </div>
     </div>
 
+    <footer id="footer" class="container-fluid text-center p-3" gui-show="hackathon.tab=='info'">
+        <div class="row">
+            <div class="col">
+                &copy; 2024 - HomeIE &vert; All Rights Reserved
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/gomyar/turtlegui@v5.20-b/turtlegui.js" crossorigin="anonymous"></script>
+    <script src="/clientui/static/common.js"></script>
     <script src="/clientui/static/hackathon.js"></script>
-</body>
-</html>
+    <!-- turf: Needed for geoJSON feature collection in route.js -->
+    <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js' defer></script>
 
+    <!-- jQuery -->
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js' defer></script>
+
+    <!-- Mapbox geocoder API used for map search bar -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js"
+        defer></script>
+
+    <!-- js files -->
+    <script src="/clientui/static/live-alert.js" defer></script>
+
+    <!-- Mapbox JS -->
+    <script src="/clientui/static/route.js" defer></script>
+
+</body>
+
+</html>

@@ -52,3 +52,5 @@ db.sqlite3
 
 # vim
 *.swp
+
+clientui/src/env_variables.yaml
